@@ -1,6 +1,6 @@
 from Modulos import *
 
-Modulo_Materias.Materias.crear_objeto()
+Modulo_Materias.Materia.crear_objeto()
 Modulo_Profesores.Profesor.crear_objeto()
 while True:
     x = input("1. Profesores\n2. Materias\n3. Generacion de horarios\n4. Modificacion de Horarios\n5. Crear listas en blanco\n6. Descargar los datos de la API de Github\n7. Cargar un horario en CSV\n8. Salir\n")

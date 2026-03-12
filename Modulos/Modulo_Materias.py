@@ -2,7 +2,7 @@ from . import requests_api as api
 from . import Modulo_Profesores
 
 lista_final_materias = []
-class Materias():
+class Materia():
     def __init__(self, nombre, codigo, secciones):
         self.nombre = nombre
         self.codigo = codigo
@@ -15,7 +15,7 @@ class Materias():
         x = 0
         data = api.data_materias
         for newobject in data:
-            newobject = Materias(data[x]["Nombre"],data[x]["Código"],data[x]["Secciones"])
+            newobject = Materia(data[x]["Nombre"],data[x]["Código"],data[x]["Secciones"])
             lista_final_materias.append(newobject)
             x += 1
         return lista_final_materias
@@ -37,25 +37,32 @@ def add_materia():
     nombre = input("Ingrese el nombre de la materia: ")
     codigo = input("Ingrese el codigo de la materia: ")
     secciones = int(input("Ingrese la cantidad de secciones de la materia: "))
-    newobject = Materias(nombre, codigo, secciones)
+    newobject = Materia(nombre, codigo, secciones)
     print(newobject)
     lista_final_materias.append(newobject)
 
 def del_materia():
     z = -1
+    boolean = False
     x = input("Ingrese el codigo de la materia a eliminar: ")
     for materia in lista_final_materias:
         z += 1
-        if x == materia.codigo:
-            print(materia)
-            y = input("Esta seguro que quiere eliminar esta materia de la lista? (Y/N): ")
-            if y == "Y" or "y":
-                lista_final_materias.pop(z)
-                print("La materia ha sido eliminada")
-                return 
-            else:
-                print("No se elimino la materia de la lista")
-                pass  
+        for profe in Modulo_Profesores.lista_final_profesor:
+            if x == materia.codigo and x in profe.materias:
+                if boolean == False:
+                    print(f"test, {materia.codigo},{profe.materias}")
+                    asdf = input(f"Advertencia, existen profesores con la materia de codigo {x} asociada\nsi elimina esta materia tambien se eliminara de los profesores asociados\nContinuar? (Y/N)\n")
+                if asdf == "Y" or asdf == "y":
+                    boolean = True
+                    profe.materias.remove(x)
+                else:
+                    break
+        if x == materia.codigo and boolean == True:
+            lista_final_materias.pop(z)
+            print("La materia ha sido eliminada")
+        elif boolean == False:
+            print("No se elimino la materia de la lista")
+            break
 
 def modseccionmateria():
     z = -1
@@ -65,29 +72,24 @@ def modseccionmateria():
         if x == materia.codigo:
             print(materia)
             newsecc = int(input("Ingrese el nuevo numero de secciones: "))
-            materia.secciones = newsecc
-            print("Seccion cambiada con exito!\n",materia.nombre,"\n","Nuevo nro de secciones:",materia.secciones)
-
+            boolean = False
+            if newsecc == 0:
+                y = input(f"Advertencia, al ingresar el numero cero quiere referirse que la materia de codigo {materia.codigo} no se oferta en el trimestre actual\nDesea continuar? (Y/N)\n")
+                if y == "Y" or y == "y":
+                    boolean = True
+                    materia.secciones = newsecc
+                    print("Seccion cambiada con exito!\n",materia.nombre,"\n","Nuevo nro de secciones:",materia.secciones)          
+            if boolean == False and newsecc == 0:
+                print("No se cambio el numero de secciones")
+                break
+            elif newsecc != 0:
+                materia.secciones = newsecc
+                print("Seccion cambiada con exito!\n",materia.nombre,"\n","Nuevo nro de secciones:",materia.secciones)
+                
 def materia_asociada():
         z = -1
         x = input("Ingrese el codigo de la materia para ver que profesores estan asociados: ")
         for profe in Modulo_Profesores.lista_final_profesor:
             z += 1
             if x in profe.materias:
-                #print("\n",i["Nombre"], i["Apellido"],i["Cedula"],"\nLista de materias:", i["Materias"],"\n")
                 print(profe.nombre, profe.apellido, profe.cedula, "\nlista de materias: ",profe.materias, "\n")
-            #else:
-                #print("No se encontro ningun profesor asociada a la materia",x)
-                #return
-
-    # def materia_asociada_fromapi():
-    #     data = api.data_profesores
-    #     z = -1
-    #     x = input("Ingrese el codigo de la materia para ver que profesores estan asociados: ")
-    #     for i in api.data_profesores:
-    #         z += 1
-    #         if x in i["Materias"]:
-    #             print("\n",i["Nombre"], i["Apellido"],i["Cedula"],"\nLista de materias:", i["Materias"],"\n")
-    #         #else:
-    #             #print("No se encontro ningun profesor asociada a la materia",x)
-    #             #return

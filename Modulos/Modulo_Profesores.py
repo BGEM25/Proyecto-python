@@ -67,6 +67,10 @@ def del_profesor():
             else:
                 print("No se elimino el docente de la lista")
                 pass  
+            
+# Nótese que al eliminar profesores o eliminar una materia de la lista de un profesor, puede 
+# quedar una materia sin profesores que puedan darla. Si esto ocurre, debe imprimirse un 
+# mensaje de advertencia y solicitarle al usuario que confirme la acción.
 
 def modlistmateriasprofe():
     z = -1

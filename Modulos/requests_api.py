@@ -3,7 +3,7 @@ import requests
 #import csv
 #import pandas
 
-profesores_url = ("https://raw.githubusercontent.com/xdxvlxlx/AyP-Proyecto/refs/heads/master/profesores.json")
+profesores_url = ("https://raw.githubusercontent.com/FernandoSapient/BPTSP05_2526-2/refs/heads/main/profesores.json")
 materias_url = ("https://raw.githubusercontent.com/FernandoSapient/BPTSP05_2526-2/refs/heads/main/materias2526-1.json")
 
 #def descargar():
