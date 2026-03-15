@@ -68,7 +68,11 @@ def add_materia():
     # ya que alguien puede poner letras en la cantidad de secciones.
     try:
         nombre = input("Ingrese el nombre de la materia: ")
+        while nombre == "":
+            nombre = input("[!] Error: Por favor ingrese un nombre valido: ")  
         codigo = input("Ingrese el codigo de la materia: ")
+        while apellido == "":
+            apellido = input("[!] Error: Por favor ingrese un codigo de materia valido: ")
         secciones = int(input("Ingrese la cantidad de secciones de la materia: "))
         newobject = Materia(nombre, codigo, secciones)
         lista_final_materias.append(newobject)
