@@ -4,6 +4,14 @@ Sistema de Gestión de Horarios Universitarios
 Este programa es el núcleo del proyecto. Controla el flujo principal, 
 coordina los módulos de profesores y materias, y gestiona la persistencia
 de los horarios generados durante la sesión.
+
+Consideraciones de eficiencia globales:
+- Tiempo: O(1) para la navegación. Las sentencias if/elif del menú se 
+  ejecutan en tiempo constante. El tiempo total de ejecución dependerá 
+  exclusivamente de la complejidad de los módulos invocados.
+- Memoria (Espacio): O(M + P + H), donde 'M' son las materias, 'P' los 
+  profesores y 'H' la malla horaria generada, las cuales se mantienen 
+  vivas en la memoria RAM mientras el ciclo principal esté activo.
 """
 
 from Modulos import *
@@ -17,7 +25,8 @@ horario_generado = None
 
 while True:
     """
-    Ciclo principal del menú. Gestiona la navegación del usuario.
+    Ciclo principal del menú. Gestiona la interacción del usuario.
+    Eficiencia: O(1) por iteración.
     """
     x = input("\n1. Profesores\n2. Materias\n3. Generacion de horarios\n4. Modificacion de Horarios\n5. Crear listas en blanco\n6. Descargar los datos de la API de Github\n7. Cargar un horario en CSV\n8. Salir\n>> ")
     

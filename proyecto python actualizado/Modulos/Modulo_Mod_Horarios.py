@@ -16,6 +16,13 @@ def iniciar_modificacion(mi_horario):
     
     Args:
         mi_horario (Horario): El objeto horario que contiene la malla actual.
+        
+    Consideraciones de eficiencia:
+    - Tiempo: O(B * S + P), donde B son los bloques (14), S las secciones máximas,
+      y P los profesores. Obtener secciones libres es O(B*S) y buscar profesores
+      libres es O(P). El algoritmo es eficiente gracias a que B y S están acotados.
+    - Memoria: O(C), donde C son los profesores capacitados guardados en la
+      lista de profesores disponibles.
     """
     busqueda = input("\nIngrese el nombre o código de la materia a modificar: ")
     secciones = mi_horario.obtener_secciones(busqueda)

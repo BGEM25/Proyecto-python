@@ -16,6 +16,12 @@ materias_url = "https://raw.githubusercontent.com/FernandoSapient/BPTSP05_2526-2
 def descargar():
     """
     Descarga los datos de la API y los guarda en archivos JSON locales.
+    
+    Consideraciones de eficiencia:
+    - Tiempo: O(n + m), donde 'n' y 'm' son los tamaños de los archivos JSON 
+      descargados. La serialización (json.dump) recorre todos los caracteres.
+    - Memoria (Espacio): O(n + m), ya que los datos de respuesta se cargan 
+      temporalmente en la memoria RAM antes de escribirse en el disco.
     """
     # Con este try-except buscamos evitar que el programa se cuelgue por un error de conexión o de red, 
     # ya que alguien puede no tener internet, estar detrás de un firewall o el servidor de GitHub 

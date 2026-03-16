@@ -11,6 +11,12 @@ import json
 def convert():
     """
     Convierte la lista de profesores de formato JSON a CSV.
+    
+    Consideraciones de eficiencia:
+    - Tiempo: O(n), donde 'n' es la cantidad de profesores en el JSON. 
+      Se requiere iterar una vez sobre todos los diccionarios para escribir el CSV.
+    - Memoria (Espacio): O(n), ya que el archivo JSON completo se carga 
+      en la memoria mediante json.load() antes de transcribirse.
     """
     # Con este try-except buscamos evitar que el programa se detenga si no existe el archivo origen,
     # ya que alguien puede intentar convertir los datos sin haberlos descargado primero (Opción 6).
@@ -28,7 +34,7 @@ def convert():
 
         # 3. Escribimos el CSV
         with open("profesores.csv", "w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, llenarnombres=llenarnombres, delimiter=";")
+            writer = csv.DictWriter(f, fieldnames=llenarnombres, delimiter=";")
             writer.writeheader()
             for data in json_file:
                 writer.writerow(data)
@@ -43,6 +49,11 @@ def convert():
 def cargar_y_mostrar_csv():
     """
     Lee el horario guardado y lo imprime en consola con formato de tabla.
+    
+    Consideraciones de eficiencia:
+    - Tiempo: O(n), donde 'n' es la cantidad de filas en el archivo CSV.
+    - Memoria (Espacio): O(1), el uso de un iterador (csv.reader) permite 
+      procesar el archivo línea por línea sin cargar todo en la RAM.
     """
     nombre_archivo = "horario_generado.csv"
     print("\n" + "="*70)

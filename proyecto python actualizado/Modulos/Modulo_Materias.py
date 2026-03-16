@@ -16,6 +16,10 @@ class Materia():
     """
     Representa una asignatura del plan de estudios con su nombre, 
     código único y número de secciones a ofertar.
+    
+    Consideraciones de eficiencia:
+    La instanciación de un objeto Materia es O(1) en tiempo y espacio, 
+    ya que solo asigna referencias a las variables locales.
     """
     def __init__(self, nombre, codigo, secciones):
         self.nombre = nombre
@@ -33,6 +37,10 @@ class Materia():
     def crear_objeto():
         """
         Lee el archivo JSON local para cargar las materias en la memoria del programa.
+        
+        Consideraciones de eficiencia:
+        - Tiempo: O(n), donde 'n' es el número de materias en el JSON.
+        - Memoria: O(n), se almacenan 'n' objetos Materia en la lista global.
         """
         # Con este try-except buscamos evitar que el programa se detenga si no existe el archivo JSON,
         # ya que alguien puede haber borrado el archivo 'materias2526-1.json' accidentalmente.
@@ -50,12 +58,18 @@ class Materia():
             print(f"\n[!] Error inesperado al cargar materias: {e}")
 
 def ver_materia():
-    """Muestra la lista completa de materias cargadas actualmente."""
+    """
+    Muestra la lista completa de materias cargadas actualmente.
+    Eficiencia: Tiempo O(n), Memoria O(1).
+    """
     for i, materia in enumerate(lista_final_materias, 1):
         print(f"{i}. {materia.nombre} ({materia.codigo})")
 
 def specific_materia():
-    """Busca y retorna los datos de una materia específica usando su código."""
+    """
+    Busca y retorna los datos de una materia específica usando su código.
+    Eficiencia: Tiempo O(n) en el peor de los casos (búsqueda lineal), Memoria O(1).
+    """
     x = input("Ingrese el codigo de la materia: ")
     for materia in lista_final_materias:
         if materia.codigo == x:
@@ -63,7 +77,10 @@ def specific_materia():
     print("Materia no encontrada.")
 
 def add_materia():
-    """Permite al usuario registrar una nueva materia manualmente."""
+    """
+    Permite al usuario registrar una nueva materia manualmente.
+    Eficiencia: Tiempo O(1) amortizado (append en lista), Memoria O(1).
+    """
     # Con este try-except buscamos evitar que el programa falle por un error de valor,
     # ya que alguien puede poner letras en la cantidad de secciones.
     try:
@@ -71,8 +88,8 @@ def add_materia():
         while nombre == "":
             nombre = input("[!] Error: Por favor ingrese un nombre valido: ")  
         codigo = input("Ingrese el codigo de la materia: ")
-        while apellido == "":
-            apellido = input("[!] Error: Por favor ingrese un codigo de materia valido: ")
+        while codigo == "": # Corregí 'apellido' por 'codigo' en tu validación del while
+            codigo = input("[!] Error: Por favor ingrese un codigo de materia valido: ")
         secciones = int(input("Ingrese la cantidad de secciones de la materia: "))
         newobject = Materia(nombre, codigo, secciones)
         lista_final_materias.append(newobject)
@@ -81,7 +98,11 @@ def add_materia():
         print("\n[!] Error: Las secciones deben ser un número entero.")
 
 def del_materia():
-    """Elimina una materia y la quita de los profesores que la tengan asociada."""
+    """
+    Elimina una materia y la quita de los profesores que la tengan asociada.
+    Eficiencia: Tiempo O(m + p*k), donde 'm' son materias, 'p' profesores y 
+    'k' la cantidad de materias por profesor. Memoria O(1).
+    """
     x = input("Ingrese el codigo de la materia a eliminar: ")
     materia_encontrada = None
     
@@ -104,7 +125,10 @@ def del_materia():
         print("No se encontró ninguna materia con ese código.")
 
 def modseccionmateria():
-    """Modifica la cantidad de secciones disponibles para una materia."""
+    """
+    Modifica la cantidad de secciones disponibles para una materia.
+    Eficiencia: Tiempo O(n) por la búsqueda lineal. Memoria O(1).
+    """
     x = input("Ingrese el codigo de la materia: ")
     for materia in lista_final_materias:
         if materia.codigo == x:
@@ -122,7 +146,11 @@ def modseccionmateria():
     print("Materia no encontrada.")
                 
 def materia_asociada():
-    """Muestra qué profesores están capacitados para dictar una materia específica."""
+    """
+    Muestra qué profesores están capacitados para dictar una materia específica.
+    Eficiencia: Tiempo O(p*k), donde 'p' es el total de profesores y 'k' 
+    sus materias asignadas. Memoria O(1).
+    """
     x = input("Ingrese el codigo de la materia: ")
     encontrado = False
     for profe in Modulo_Profesores.lista_final_profesor:
