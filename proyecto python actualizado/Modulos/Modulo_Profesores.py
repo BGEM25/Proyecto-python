@@ -15,6 +15,10 @@ class Profesor():
     """
     Representa a un docente con sus datos personales, laborales y 
     su especialización en materias.
+    
+    Consideraciones de eficiencia:
+    La instanciación del objeto Profesor tiene un tiempo y espacio de O(1),
+    ya que solo asigna los valores a los atributos internos.
     """
     def __init__(self, nombre, apellido, cedula, email, max_carga, materias):
         self.nombre = nombre
@@ -35,6 +39,11 @@ class Profesor():
     def crear_objeto():
         """
         Carga los datos de los profesores desde el archivo JSON local.
+        
+        Consideraciones de eficiencia:
+        - Tiempo: O(n), donde 'n' es la cantidad de profesores en el JSON.
+        - Memoria: O(n), se almacenan los 'n' profesores en la memoria RAM 
+          (lista_final_profesor).
         """
         # Con este try-except buscamos evitar que el programa se detenga si falta el archivo de base de datos, 
         # ya que alguien puede intentar iniciar el sistema sin haber descargado los datos de GitHub primero.
@@ -60,12 +69,18 @@ class Profesor():
             print(f"\n[!] Error inesperado al cargar profesores: {e}")
 
 def ver_profesores():
-    """Muestra la lista de todos los docentes registrados."""
+    """
+    Muestra la lista de todos los docentes registrados.
+    Eficiencia: Tiempo O(n) al recorrer la lista. Memoria O(1).
+    """
     for i, profe in enumerate(lista_final_profesor, 1):
         print(f"{i}. {profe.nombre} {profe.apellido}")
 
 def specific_profesor():
-    """Busca un profesor por su número de cédula."""
+    """
+    Busca un profesor por su número de cédula.
+    Eficiencia: Tiempo O(n) por búsqueda lineal en el peor caso. Memoria O(1).
+    """
     # Con este try-except buscamos evitar que el programa falle por un error de tipo, 
     # ya que alguien puede poner puntos o letras en el campo de la cédula.
     try:
@@ -78,7 +93,11 @@ def specific_profesor():
         return "\n[!] Error: La cédula debe contener solo números."
 
 def add_profesor():
-    """Registra un nuevo profesor de forma manual."""
+    """
+    Registra un nuevo profesor de forma manual validando entradas.
+    Eficiencia: Tiempo O(k), donde 'k' es la carga máxima de materias (por el loop). 
+    Memoria O(k) para la lista temporal de materias.
+    """
     # Con este try-except buscamos evitar que el programa se cierre por errores de entrada, 
     # ya que alguien puede ingresar texto en campos que requieren números (cédula o carga).
     # Con los bucle while evitamos que el usuario ingrese valores que esten vacios,
@@ -99,7 +118,6 @@ def add_profesor():
         list_materias = []
         
         for i in range(max_carga):
-            #list_materias.append(input(f"Ingrese el código de la materia {i+1}: "))
             x = input(f"Ingrese el código de la materia {i+1}: ")
             while x == "":
                 x = input("[!] Error: Por favor ingrese un codigo de materia valido: ")
@@ -111,7 +129,10 @@ def add_profesor():
         print("\n[!] Error: Cédula y carga máxima deben ser valores numéricos.\n")
 
 def del_profesor():
-    """Elimina a un profesor de la lista tras confirmar la acción."""
+    """
+    Elimina a un profesor de la lista tras confirmar la acción.
+    Eficiencia: Tiempo O(n) por búsqueda y reacomodo de lista (pop). Memoria O(1).
+    """
     try:
         x = int(input("Ingrese la cédula del docente a eliminar: "))
         for i, profe in enumerate(lista_final_profesor):
@@ -130,7 +151,11 @@ def del_profesor():
         print("\n[!] Error: Ingrese una cédula válida.")
 
 def modlistmateriasprofe():
-    """Permite añadir o quitar materias de la especialidad de un profesor."""
+    """
+    Permite añadir o quitar materias de la especialidad de un profesor.
+    Eficiencia: Tiempo O(n + k), donde 'n' busca al profe y 'k' busca la materia
+    en su lista específica. Memoria O(1).
+    """
     try:
         x = int(input("Ingrese la cédula del docente: "))
         for profe in lista_final_profesor:
